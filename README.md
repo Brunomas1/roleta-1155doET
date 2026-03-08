@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# 🎡 Roleta 1155 do ET - Windows XP Edition
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação de sorteios moderna envolta em uma experiência nostálgica e autêntica do **Windows XP Luna**. Este sistema combina tecnologia de ponta com o design clássico dos anos 2000, oferecendo sorteios legítimos e uma interface extremamente rica em detalhes.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Características e Estilo
 
-## React Compiler
+### 🖥️ Interface Windows XP Autêntica
+- **Barra de Tarefas Funcional**: Inclui o menu Iniciar clássico, relógio estático em 11:55 e suporte total para minimizar e restaurar janelas.
+- **Janelas Arrastáveis**: Todo o painel de controle e o histórico estão dentro de uma janela XP unificada que pode ser movida livremente pela tela.
+- **Instalador Nostálgico**: Ao realizar um sorteio, a animação da roleta é substituída por uma barra de progresso de instalação do Windows XP, com nomes de arquivos sendo extraídos em tempo real.
+- **Desktop Interativo**: Atalhos de área de trabalho para Lixeira, YouTube e GitHub, completos com as icônicas setas de atalho.
+- **Backgrounds Dinâmicos**: O papel de parede muda automaticamente a cada 60 segundos com transições suaves.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🛠️ Aplicativos de Monitoramento (Fake)
+A barra de tarefas conta com atalhos para ferramentas clássicas de hardware, exibindo especificações personalizadas:
+- **CPU-Z**: Exibe detalhes de um **Intel Core i3-2100**.
+- **GPU-Z**: Exibe detalhes de uma **AMD Radeon RX 580**.
+- **HWMonitor**: Monitoramento em tempo real de temperaturas e carga.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Funcionalidades Principais
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Modos de Sorteio Dual**:
+  - **Texto**: Insira uma lista de opções (uma por linha).
+  - **Números**: Defina um intervalo (ex: 1 a 100).
+- **Sistema de "Blacklist" (Sorteio Único)**:
+  - Os itens são removidos automaticamente do pool após serem sorteados, garantindo que ninguém ganhe duas vezes seguidas no mesmo sorteio.
+- **Gestão de Áudio Inteligente**:
+  - Sons de vitória e "ticks" de progresso sincronizados.
+  - O sistema impede a sobreposição de áudios ao reiniciar sorteios rapidamente.
+  - Controle de Mute diretamente no ícone de volume da System Tray.
+- **Histórico Persistente**:
+  - Os últimos 50 resultados são salvos localmente, incluindo o hash de legitimidade de cada sorteio.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## ⚖️ Legitimidade (Provably Fair)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+A **Roleta 1155 do ET** utiliza um sistema de **Provably Fair (Provavelmente Justo)** para garantir que nenhum resultado seja manipulado:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Server Seed**: Uma string aleatória gerada no servidor (ou localmente).
+2. **Client Seed**: Uma semente que o usuário pode personalizar para influenciar o sorteio.
+3. **Nonce**: Um número que incrementa a cada sorteio, garantindo que sementes repetidas gerem resultados diferentes.
+4. **Criptografia SHA-256**: Combinamos esses dados em um hash criptográfico. O índice do vencedor é derivado matematicamente deste hash, tornando o resultado **100% verificável e impossível de prever** antes do sorteio.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- **React + TypeScript**: Para uma interface robusta e tipagem segura.
+- **Vite**: Build tool ultrarrápida para desenvolvimento moderno.
+- **Framer Motion**: Responsável pelas animações de janelas, minimização e transições de background.
+- **Vanilla CSS**: Todo o tema Windows XP foi construído com CSS puro para garantir fidelidade visual máxima e performance.
+- **Web Audio API**: Para síntese e controle preciso dos efeitos sonoros.
+- **Canvas Confetti**: Celebrações visuais de alta performance.
+
+---
+
+## 📦 Como Rodar Localmente
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/Brunomas1/roleta-1155doET.git
+   ```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+Desenvolvido com 💙 para a comunidade **1155 do ET**.
