@@ -26,17 +26,49 @@ export function useDraggable(storageKey: string, defaultPos: Position = { x: 0, 
     e.preventDefault();
   }, [pos]);
 
+  // Clamp position on mount and whenever window resizes
+  useEffect(() => {
+    const clamp = () => {
+      if (containerRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        const maxX = Math.max(0, window.innerWidth - width);
+        const maxY = Math.max(0, window.innerHeight - height - 30);
+        
+        setPos(p => ({
+          x: Math.max(0, Math.min(p.x, maxX)),
+          y: Math.max(0, Math.min(p.y, maxY)),
+        }));
+      }
+    };
+
+    clamp();
+    window.addEventListener('resize', clamp);
+    return () => window.removeEventListener('resize', clamp);
+  }, []);
+
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
       if (!dragging.current) return;
       const dx = e.clientX - startMouse.current.x;
       const dy = e.clientY - startMouse.current.y;
 
-      const newPos = {
-        x: startPos.current.x + dx,
-        y: startPos.current.y + dy,
-      };
-      setPos(newPos);
+      let newX = startPos.current.x + dx;
+      let newY = startPos.current.y + dy;
+
+      if (containerRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        
+        // Boundaries: 
+        // X: [0, windowWidth - windowContentWidth]
+        // Y: [0, windowHeight - windowContentHeight - taskbarHeight(30)]
+        const maxX = Math.max(0, window.innerWidth - width);
+        const maxY = Math.max(0, window.innerHeight - height - 30);
+
+        newX = Math.max(0, Math.min(newX, maxX));
+        newY = Math.max(0, Math.min(newY, maxY));
+      }
+
+      setPos({ x: newX, y: newY });
     };
 
     const onMouseUp = () => {

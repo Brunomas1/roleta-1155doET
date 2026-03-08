@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { cn } from '../lib/utils';
 import windowsLogo from '../assets/images/windows-logo.png';
+import { useDraggable } from '../hooks/useDraggable';
 
 interface WindowEntry {
   id: string;
@@ -115,12 +116,14 @@ const FAKE_APPS: FakeApp[] = [
 
 const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute }) => {
   const [openApp, setOpenApp] = useState<string | null>(null);
-  const [appPos, setAppPos] = useState({ x: 200, y: 200 });
+  const { style: dragStyle, onMouseDown: onDragStart, containerRef } = useDraggable('xp_fake_app', { 
+    x: window.innerWidth / 2 - 180, 
+    y: window.innerHeight / 2 - 180 
+  });
 
   const toggleApp = (id: string) => {
     if (openApp === id) { setOpenApp(null); return; }
     setOpenApp(id);
-    setAppPos({ x: window.innerWidth / 2 - 180, y: window.innerHeight / 2 - 180 });
   };
 
   const activeApp = FAKE_APPS.find(a => a.id === openApp);
@@ -129,14 +132,18 @@ const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute 
     <>
       {/* Fake app popup */}
       {activeApp && (
-        <div className="xp-fake-app" style={{ left: appPos.x, top: appPos.y }}>
-          <div className="xp-titlebar">
+        <div 
+          ref={containerRef}
+          className="xp-fake-app" 
+          style={{ ...dragStyle, visibility: activeApp ? 'visible' : 'hidden' }}
+        >
+          <div className="xp-titlebar" style={{ cursor: 'grab' }} onMouseDown={onDragStart}>
             <span style={{ fontSize: 13 }}>{activeApp.icon}</span>
             <span className="xp-titlebar-text">{activeApp.name}</span>
             <div className="xp-titlebar-controls">
               <button className="xp-btn-wc xp-btn-minmax">_</button>
               <button className="xp-btn-wc xp-btn-minmax">□</button>
-              <button className="xp-btn-wc xp-btn-close" onClick={() => setOpenApp(null)}>✕</button>
+              <button className="xp-btn-wc xp-btn-close" onMouseDown={e => e.stopPropagation()} onClick={() => setOpenApp(null)}>✕</button>
             </div>
           </div>
           {activeApp.content}
