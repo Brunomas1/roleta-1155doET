@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '../lib/utils';
 import windowsLogo from '../assets/images/windows-logo.png';
+import volumeIcon from '../assets/images/Volume.png';
+import muteIcon from '../assets/images/Mute.png';
 import { useDraggable } from '../hooks/useDraggable';
 
 interface WindowEntry {
@@ -37,21 +39,25 @@ const hwReadings = [
 
 function CPUZContent() {
   return (
-    <div className="xp-body" style={{ padding: '10px 12px', fontSize: 11, fontFamily: 'Tahoma' }}>
-      <div className="xp-panel" style={{ marginBottom: 8, padding: '6px 10px' }}>
-        <div style={{ fontWeight: 'bold', color: '#316ac5', marginBottom: 4 }}>Processor</div>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          {[['Name', 'Intel Core i3-2100'], ['Code Name', 'Sandy Bridge'], ['Cores', '2'], ['Threads', '4'], ['Clock', '3.10 GHz'], ['Cache', '3 MB']].map(([k, v]) => (
-            <tr key={k}>
-              <td style={{ color: '#555', paddingRight: 12, paddingBottom: 2 }}>{k}</td>
-              <td style={{ fontWeight: 'bold' }}>{v}</td>
-            </tr>
-          ))}
-        </table>
-      </div>
-      <div style={{ display: 'flex', gap: 8 }}>
+    <div style={{ padding: '4px', fontSize: 11, fontFamily: 'Tahoma' }}>
+      <fieldset style={{ marginBottom: 8 }}>
+        <legend>Processor</legend>
+        <div className="sunken-panel" style={{ padding: '6px 10px', background: '#fff' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              {[['Name', 'Intel Core i3-2100'], ['Code Name', 'Sandy Bridge'], ['Cores', '2'], ['Threads', '4'], ['Clock', '3.10 GHz'], ['Cache', '3 MB']].map(([k, v]) => (
+                <tr key={k}>
+                  <td style={{ color: '#555', paddingRight: 12, paddingBottom: 2 }}>{k}</td>
+                  <td style={{ fontWeight: 'bold' }}>{v}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </fieldset>
+      <div style={{ display: 'flex', gap: 4 }}>
         {cpuReadings.map(r => (
-          <div key={r} className="xp-raised" style={{ flex: 1, textAlign: 'center', padding: '4px 6px', fontSize: 10 }}>{r}</div>
+          <div key={r} className="sunken-panel" style={{ flex: 1, textAlign: 'center', padding: '2px 4px', fontSize: 10, background: '#fff' }}>{r}</div>
         ))}
       </div>
     </div>
@@ -60,21 +66,25 @@ function CPUZContent() {
 
 function GPUZContent() {
   return (
-    <div className="xp-body" style={{ padding: '10px 12px', fontSize: 11, fontFamily: 'Tahoma' }}>
-      <div className="xp-panel" style={{ marginBottom: 8, padding: '6px 10px' }}>
-        <div style={{ fontWeight: 'bold', color: '#316ac5', marginBottom: 4 }}>Graphics Card</div>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          {[['Name', 'Radeon RX 580'], ['Vendor', 'AMD'], ['Memory', '8192 MB GDDR5'], ['Bus', 'PCIe 3.0 x16'], ['Driver', 'Adrenalin 23.5.2'], ['DirectX', '12']].map(([k, v]) => (
-            <tr key={k}>
-              <td style={{ color: '#555', paddingRight: 12, paddingBottom: 2 }}>{k}</td>
-              <td style={{ fontWeight: 'bold' }}>{v}</td>
-            </tr>
-          ))}
-        </table>
-      </div>
-      <div style={{ display: 'flex', gap: 8 }}>
+    <div style={{ padding: '4px', fontSize: 11, fontFamily: 'Tahoma' }}>
+      <fieldset style={{ marginBottom: 8 }}>
+        <legend>Graphics Card</legend>
+        <div className="sunken-panel" style={{ padding: '6px 10px', background: '#fff' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              {[['Name', 'Radeon RX 580'], ['Vendor', 'AMD'], ['Memory', '8192 MB GDDR5'], ['Bus', 'PCIe 3.0 x16'], ['Driver', 'Adrenalin 23.5.2'], ['DirectX', '12']].map(([k, v]) => (
+                <tr key={k}>
+                  <td style={{ color: '#555', paddingRight: 12, paddingBottom: 2 }}>{k}</td>
+                  <td style={{ fontWeight: 'bold' }}>{v}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </fieldset>
+      <div style={{ display: 'flex', gap: 4 }}>
         {gpuReadings.map(r => (
-          <div key={r} className="xp-raised" style={{ flex: 1, textAlign: 'center', padding: '4px 6px', fontSize: 10 }}>{r}</div>
+          <div key={r} className="sunken-panel" style={{ flex: 1, textAlign: 'center', padding: '2px 4px', fontSize: 10, background: '#fff' }}>{r}</div>
         ))}
       </div>
     </div>
@@ -83,22 +93,22 @@ function GPUZContent() {
 
 function HWMonitorContent() {
   return (
-    <div className="xp-body" style={{ padding: '10px 12px', fontSize: 11, fontFamily: 'Tahoma' }}>
-      <div className="xp-panel" style={{ padding: '4px 8px' }}>
+    <div style={{ padding: '8px 4px', fontSize: 11, fontFamily: 'Tahoma' }}>
+      <div className="sunken-panel" style={{ background: '#fff' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid #d0d0d0' }}>
+            <tr style={{ borderBottom: '1px solid #d0d0d0', background: '#f0f0f0' }}>
               {['Sensor', 'Temp', 'Load'].map(h => (
-                <th key={h} style={{ textAlign: 'left', color: '#316ac5', paddingBottom: 4, paddingRight: 12, fontWeight: 'bold', fontSize: 10 }}>{h}</th>
+                <th key={h} style={{ textAlign: 'left', color: '#316ac5', padding: '4px 8px', fontWeight: 'bold', fontSize: 10 }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {hwReadings.map(([s, t, l]) => (
               <tr key={s} style={{ borderBottom: '1px solid #ece9d8' }}>
-                <td style={{ padding: '3px 12px 3px 0', fontWeight: 'bold' }}>{s}</td>
-                <td style={{ padding: '3px 12px 3px 0', color: Number(t.replace('°C', '')) > 70 ? '#c00' : '#080' }}>{t}</td>
-                <td style={{ padding: '3px 0' }}>{l}</td>
+                <td style={{ padding: '4px 8px', fontWeight: 'bold' }}>{s}</td>
+                <td style={{ padding: '4px 8px', color: Number(t.replace('°C', '')) > 70 ? '#c00' : '#080' }}>{t}</td>
+                <td style={{ padding: '4px 8px' }}>{l}</td>
               </tr>
             ))}
           </tbody>
@@ -116,6 +126,12 @@ const FAKE_APPS: FakeApp[] = [
 
 const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute }) => {
   const [openApp, setOpenApp] = useState<string | null>(null);
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
   const { style: dragStyle, onMouseDown: onDragStart, containerRef } = useDraggable('xp_fake_app', {
     x: window.innerWidth / 2 - 180,
     y: window.innerHeight / 2 - 180
@@ -134,22 +150,23 @@ const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute 
       {activeApp && (
         <div
           ref={containerRef}
-          className="xp-fake-app"
-          style={{ ...dragStyle, visibility: activeApp ? 'visible' : 'hidden' }}
+          className="window"
+          style={{ ...dragStyle, visibility: activeApp ? 'visible' : 'hidden', position: 'absolute', width: 360, zIndex: 100 }}
         >
-          <div className="xp-titlebar" style={{ cursor: 'grab' }} onMouseDown={onDragStart}>
-            <span style={{ fontSize: 13 }}>{activeApp.icon}</span>
-            <span className="xp-titlebar-text">{activeApp.name}</span>
-            <div className="xp-titlebar-controls">
-              <button className="xp-btn-wc xp-btn-minmax">_</button>
-              <button className="xp-btn-wc xp-btn-minmax">□</button>
-              <button className="xp-btn-wc xp-btn-close" onMouseDown={e => e.stopPropagation()} onClick={() => setOpenApp(null)}>✕</button>
+          <div className="title-bar" style={{ cursor: 'grab' }} onMouseDown={onDragStart}>
+            <div className="title-bar-text">{activeApp.name}</div>
+            <div className="title-bar-controls">
+              <button aria-label="Minimize" />
+              <button aria-label="Maximize" />
+              <button aria-label="Close" onMouseDown={e => e.stopPropagation()} onClick={() => setOpenApp(null)} />
             </div>
           </div>
-          {activeApp.content}
-          <div className="xp-statusbar">
-            <span>{activeApp.name} v1.77.1</span>
-            <span style={{ marginLeft: 'auto' }}>Sistema OK</span>
+          <div className="window-body" style={{ margin: 0, padding: 2 }}>
+            {activeApp.content}
+            <div className="status-bar" style={{ marginTop: 4 }}>
+              <p className="status-bar-field">{activeApp.name} v1.77.1</p>
+              <p className="status-bar-field">Sistema OK</p>
+            </div>
           </div>
         </div>
       )}
@@ -194,19 +211,34 @@ const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute 
 
         {/* System tray */}
         <div className="xp-taskbar-tray">
-          <span
-            className="xp-tray-icon"
+          <button
             title={muteSound ? 'Ativar Som' : 'Desativar Som'}
             onClick={onToggleMute}
-            style={{ fontSize: 16, cursor: 'pointer' }}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              padding: 0,
+              width: 16,
+              height: 16,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: -28,
+              marginLeft: -28
+            }}
           >
-            {muteSound ? '🔇' : '🔊'}
+            <img
+              src={muteSound ? muteIcon : volumeIcon}
+              alt={muteSound ? 'Muted' : 'Volume'}
+              style={{ width: 16, height: 16, imageRendering: 'pixelated', display: 'block' }}
+            />
+          </button>
+
+          <div style={{ width: 1, height: 16, background: '#4060a0', margin: '0 4px', opacity: 0.5 }} />
+          <span className="xp-tray-clock">
+            {time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}
           </span>
-          <span className="xp-tray-icon" title="Network">🌐</span>
-          <span className="xp-tray-icon" title="Antivirus">🛡️</span>
-          <div style={{ width: 1, height: 16, background: '#4060a0', margin: '0 4px' }} />
-          <span className="xp-tray-clock">17/05/2023</span>
-          <span className="xp-tray-clock" style={{ fontWeight: 'bold' }}>11:55</span>
         </div>
       </div>
     </>

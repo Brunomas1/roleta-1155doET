@@ -53,7 +53,8 @@ A **Roleta 1155 do ET** utiliza um sistema de **Provably Fair (Provavelmente Jus
 - **React + TypeScript**: Para uma interface robusta e tipagem segura.
 - **Vite**: Build tool ultrarrápida para desenvolvimento moderno.
 - **Framer Motion**: Responsável pelas animações de janelas, minimização e transições de background.
-- **Vanilla CSS**: Todo o tema Windows XP foi construído com CSS puro para garantir fidelidade visual máxima e performance.
+- **XP.css**: Todo o tema base e recortes visuais do Windows XP foram gentilmente providenciados por [XP.css (botoxparty)](https://github.com/botoxparty/XP.css), garantindo a fidelidade nostálgica 100%.
+- **Vanilla CSS**: Refinamentos, overrides e layouts customizados construídos sobre a base do xp.css.
 - **Web Audio API**: Para síntese e controle preciso dos efeitos sonoros.
 - **Canvas Confetti**: Celebrações visuais de alta performance.
 
