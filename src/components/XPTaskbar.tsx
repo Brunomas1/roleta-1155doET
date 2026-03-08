@@ -26,11 +26,11 @@ interface XPTaskbarProps {
 
 
 // Fake hardware data
-const cpuReadings = ['Intel Core i7-3770', '65°C', '3.4 GHz', 'TDP: 77W'];
-const gpuReadings = ['NVIDIA GeForce GTX 960', '72°C', '1127 MHz', 'Mem: 2048MB'];
+const cpuReadings = ['Intel Core i3-2100', '62°C', '3.10 GHz', 'TDP: 65W'];
+const gpuReadings = ['AMD Radeon RX 580', '62°C', '1257 MHz', 'Mem: 8192MB'];
 const hwReadings = [
-  ['CPU', '65°C', '100%'],
-  ['GPU', '72°C', '88%'],
+  ['CPU', '67°C', '100%'],
+  ['GPU', '62°C', '88%'],
   ['RAM', '37°C', '62%'],
   ['HDD', '31°C', '—'],
 ];
@@ -41,7 +41,7 @@ function CPUZContent() {
       <div className="xp-panel" style={{ marginBottom: 8, padding: '6px 10px' }}>
         <div style={{ fontWeight: 'bold', color: '#316ac5', marginBottom: 4 }}>Processor</div>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          {[['Name', 'Intel Core i3-2100'],['Code Name','Sandy Bridge'],['Cores','2'],['Threads','4'],['Clock','3.10 GHz'],['Cache','3 MB']].map(([k,v]) => (
+          {[['Name', 'Intel Core i3-2100'], ['Code Name', 'Sandy Bridge'], ['Cores', '2'], ['Threads', '4'], ['Clock', '3.10 GHz'], ['Cache', '3 MB']].map(([k, v]) => (
             <tr key={k}>
               <td style={{ color: '#555', paddingRight: 12, paddingBottom: 2 }}>{k}</td>
               <td style={{ fontWeight: 'bold' }}>{v}</td>
@@ -64,7 +64,7 @@ function GPUZContent() {
       <div className="xp-panel" style={{ marginBottom: 8, padding: '6px 10px' }}>
         <div style={{ fontWeight: 'bold', color: '#316ac5', marginBottom: 4 }}>Graphics Card</div>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          {[['Name','Radeon RX 580'],['Vendor','AMD'],['Memory','8192 MB GDDR5'],['Bus','PCIe 3.0 x16'],['Driver','Adrenalin 23.5.2'],['DirectX','12']].map(([k,v]) => (
+          {[['Name', 'Radeon RX 580'], ['Vendor', 'AMD'], ['Memory', '8192 MB GDDR5'], ['Bus', 'PCIe 3.0 x16'], ['Driver', 'Adrenalin 23.5.2'], ['DirectX', '12']].map(([k, v]) => (
             <tr key={k}>
               <td style={{ color: '#555', paddingRight: 12, paddingBottom: 2 }}>{k}</td>
               <td style={{ fontWeight: 'bold' }}>{v}</td>
@@ -97,7 +97,7 @@ function HWMonitorContent() {
             {hwReadings.map(([s, t, l]) => (
               <tr key={s} style={{ borderBottom: '1px solid #ece9d8' }}>
                 <td style={{ padding: '3px 12px 3px 0', fontWeight: 'bold' }}>{s}</td>
-                <td style={{ padding: '3px 12px 3px 0', color: Number(t.replace('°C','')) > 70 ? '#c00' : '#080' }}>{t}</td>
+                <td style={{ padding: '3px 12px 3px 0', color: Number(t.replace('°C', '')) > 70 ? '#c00' : '#080' }}>{t}</td>
                 <td style={{ padding: '3px 0' }}>{l}</td>
               </tr>
             ))}
@@ -109,16 +109,16 @@ function HWMonitorContent() {
 }
 
 const FAKE_APPS: FakeApp[] = [
-  { id: 'cpuz', name: 'CPU-Z',      icon: '🖥️', content: <CPUZContent /> },
-  { id: 'gpuz', name: 'GPU-Z',      icon: '🎮', content: <GPUZContent /> },
-  { id: 'hwm',  name: 'HWMonitor',  icon: '🌡️', content: <HWMonitorContent /> },
+  { id: 'cpuz', name: 'CPU-Z', icon: '🖥️', content: <CPUZContent /> },
+  { id: 'gpuz', name: 'GPU-Z', icon: '🎮', content: <GPUZContent /> },
+  { id: 'hwm', name: 'HWMonitor', icon: '🌡️', content: <HWMonitorContent /> },
 ];
 
 const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute }) => {
   const [openApp, setOpenApp] = useState<string | null>(null);
-  const { style: dragStyle, onMouseDown: onDragStart, containerRef } = useDraggable('xp_fake_app', { 
-    x: window.innerWidth / 2 - 180, 
-    y: window.innerHeight / 2 - 180 
+  const { style: dragStyle, onMouseDown: onDragStart, containerRef } = useDraggable('xp_fake_app', {
+    x: window.innerWidth / 2 - 180,
+    y: window.innerHeight / 2 - 180
   });
 
   const toggleApp = (id: string) => {
@@ -132,9 +132,9 @@ const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute 
     <>
       {/* Fake app popup */}
       {activeApp && (
-        <div 
+        <div
           ref={containerRef}
-          className="xp-fake-app" 
+          className="xp-fake-app"
           style={{ ...dragStyle, visibility: activeApp ? 'visible' : 'hidden' }}
         >
           <div className="xp-titlebar" style={{ cursor: 'grab' }} onMouseDown={onDragStart}>
@@ -158,7 +158,7 @@ const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute 
       <div className="xp-taskbar">
         {/* Start button */}
         <button className="xp-start-btn">
-          <img src={windowsLogo} alt="Windows" style={{width:18, height:18, objectFit:'contain'}} />
+          <img src={windowsLogo} alt="Windows" style={{ width: 18, height: 18, objectFit: 'contain' }} />
           <span>Iniciar</span>
         </button>
 
@@ -198,7 +198,7 @@ const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute 
             className="xp-tray-icon"
             title={muteSound ? 'Ativar Som' : 'Desativar Som'}
             onClick={onToggleMute}
-            style={{fontSize:16, cursor:'pointer'}}
+            style={{ fontSize: 16, cursor: 'pointer' }}
           >
             {muteSound ? '🔇' : '🔊'}
           </span>
@@ -206,7 +206,7 @@ const XPTaskbar: React.FC<XPTaskbarProps> = ({ windows, muteSound, onToggleMute 
           <span className="xp-tray-icon" title="Antivirus">🛡️</span>
           <div style={{ width: 1, height: 16, background: '#4060a0', margin: '0 4px' }} />
           <span className="xp-tray-clock">17/05/2023</span>
-          <span className="xp-tray-clock" style={{fontWeight:'bold'}}>11:55</span>
+          <span className="xp-tray-clock" style={{ fontWeight: 'bold' }}>11:55</span>
         </div>
       </div>
     </>
