@@ -27,6 +27,7 @@ const MainDashboard: React.FC = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [muteSound, setMuteSound] = useState(false);
   const [isInstant, setIsInstant] = useState(false);
+  const [allowRepetition, setAllowRepetition] = useState(false);
   const [xpProgress, setXpProgress] = useState(0);
   const [xpFile, setXpFile] = useState('');
   const [drawnNumbers, setDrawnNumbers] = useState<number[]>([]);
@@ -109,16 +110,18 @@ const MainDashboard: React.FC = () => {
       };
 
       const finalizeResult = (winningItem: string) => {
-        if (mode === 'text') {
-          const lines = textInput.split(/\r?\n/);
-          // Remove the first occurrence of the winning item to handle duplicates correctly if any
-          const idx = lines.findIndex(l => l.trim() === winningItem);
-          if (idx !== -1) {
-            lines.splice(idx, 1);
-            setTextInput(lines.join('\n'));
+        if (!allowRepetition) {
+          if (mode === 'text') {
+            const lines = textInput.split(/\r?\n/);
+            // Remove the first occurrence of the winning item to handle duplicates correctly if any
+            const idx = lines.findIndex(l => l.trim() === winningItem);
+            if (idx !== -1) {
+              lines.splice(idx, 1);
+              setTextInput(lines.join('\n'));
+            }
+          } else {
+            setDrawnNumbers(prev => [...prev, parseInt(winningItem)]);
           }
-        } else {
-          setDrawnNumbers(prev => [...prev, parseInt(winningItem)]);
         }
       };
 
@@ -291,6 +294,10 @@ const MainDashboard: React.FC = () => {
                     <div className="field-row">
                       <input id="instant" type="checkbox" checked={isInstant} onChange={(e) => setIsInstant(e.target.checked)} />
                       <label htmlFor="instant" style={{ cursor: 'pointer' }}>Sorteio Instantâneo</label>
+                    </div>
+                    <div className="field-row" style={{ marginTop: 6 }}>
+                      <input id="allow-repetition" type="checkbox" checked={allowRepetition} onChange={(e) => setAllowRepetition(e.target.checked)} />
+                      <label htmlFor="allow-repetition" style={{ cursor: 'pointer' }}>Permitir Repetição</label>
                     </div>
                     <div className="field-row" style={{ marginTop: 6 }}>
                       <input id="custom-seed" type="checkbox" checked={useCustomSeed} onChange={(e) => setUseCustomSeed(e.target.checked)} />
